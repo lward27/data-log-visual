@@ -1,0 +1,49 @@
+nameOverride: data-log-visual
+
+frontend:
+  replicaCount: 1
+  image:
+    repository: registry.lucas.engineering/data-log-visual-frontend
+    tag: latest
+    pullPolicy: Always
+  service:
+    port: 80
+
+backend:
+  replicaCount: 1
+  image:
+    repository: registry.lucas.engineering/data-log-visual-backend
+    tag: latest
+    pullPolicy: Always
+  service:
+    port: 8000
+  env:
+    uploadRoot: /app/uploads
+    corsOrigins: https://datalog.lucas.engineering
+    cookieSecure: "true"
+    pgHost: postgresql.apps-prod.svc.cluster.local
+    pgPort: "5432"
+    pgDatabase: datalog_visual
+    pgUser: datalog_visual_user
+  passwordSecret:
+    name: postgresql-auth
+    key: postgres-password
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "1000m"
+      memory: "512Mi"
+
+persistence:
+  storageClass: local-path
+  size: 10Gi
+
+ingress:
+  enabled: true
+  className: nginx
+  host: datalog.lucas.engineering
+  tlsSecretName: datalog-lucas-engineering-tls
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
