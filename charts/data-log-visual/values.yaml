@@ -47,3 +47,4 @@ ingress:
   tlsSecretName: datalog-lucas-engineering-tls
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-body-size: "32m"
