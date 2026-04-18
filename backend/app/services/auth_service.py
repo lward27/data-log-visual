@@ -14,7 +14,7 @@ from app.core.security import (
     verify_password,
 )
 from app.models.entities import AuthSession, User
-from app.schemas.auth import AuthUser, RegistrationRequest
+from app.schemas.auth import AuthUser, RegistrationRequest, UpdateProfileRequest
 
 
 def get_user_by_email(session: Session, email: EmailStr) -> User | None:
@@ -72,6 +72,16 @@ def get_user_by_session_token(session: Session, raw_token: str) -> User | None:
 def destroy_session(session: Session, user_id: str) -> None:
     session.exec(delete(AuthSession).where(AuthSession.user_id == user_id))
     session.commit()
+
+
+def update_user_profile(session: Session, user: User, payload: UpdateProfileRequest) -> User:
+    normalized_display_name = (payload.display_name or "").strip() or user.email.split("@", 1)[0]
+    user.display_name = normalized_display_name
+    user.updated_at = datetime.utcnow()
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+    return user
 
 
 def serialize_user(user: User) -> AuthUser:

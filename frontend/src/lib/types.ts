@@ -30,6 +30,7 @@ export interface UploadListItem {
   metric_count: number
   device_label: string | null
   vehicle_profile: string | null
+  map_name: string | null
 }
 
 export interface UploadDetail extends UploadListItem {

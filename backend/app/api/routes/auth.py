@@ -9,13 +9,14 @@ from app.api.deps import get_current_user
 from app.core.config import settings
 from app.db.session import get_session
 from app.models.entities import User
-from app.schemas.auth import AuthUser, LoginRequest, RegistrationRequest
+from app.schemas.auth import AuthUser, LoginRequest, RegistrationRequest, UpdateProfileRequest
 from app.services.auth_service import (
     create_session,
     create_user,
     destroy_session,
     get_user_by_email,
     serialize_user,
+    update_user_profile,
     verify_user_credentials,
 )
 
@@ -79,3 +80,13 @@ def logout(
 @router.get("/me", response_model=AuthUser)
 def me(current_user: User = Depends(get_current_user)) -> AuthUser:
     return serialize_user(current_user)
+
+
+@router.patch("/me", response_model=AuthUser)
+def patch_me(
+    payload: UpdateProfileRequest,
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_session),
+) -> AuthUser:
+    user = update_user_profile(session, current_user, payload)
+    return serialize_user(user)

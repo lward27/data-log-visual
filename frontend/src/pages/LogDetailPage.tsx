@@ -72,6 +72,7 @@ export function LogDetailPage() {
               {payload.sample_count.toLocaleString()} samples · {payload.available_metrics.length} metrics ·{' '}
               {payload.vehicle_profile || payload.device_label || 'COBB Access Port'}
             </p>
+            {payload.map_name && <p className="upload-subtitle">{payload.map_name}</p>}
           </div>
           <a
             className="ghost-button inline-button"
@@ -120,7 +121,11 @@ export function LogDetailPage() {
         </article>
         <article className="panel stat-card">
           <p className="eyebrow">Map</p>
-          <strong>{String(payload.source_metadata.map_name || 'Unknown')}</strong>
+          <strong>{payload.map_name || 'Unknown'}</strong>
+        </article>
+        <article className="panel stat-card">
+          <p className="eyebrow">Uploaded</p>
+          <strong>{new Date(payload.uploaded_at).toLocaleDateString()}</strong>
         </article>
       </section>
 

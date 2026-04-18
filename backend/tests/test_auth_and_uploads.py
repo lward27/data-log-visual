@@ -42,6 +42,15 @@ def test_register_and_me_flow(tmp_path) -> None:
     assert me_response.status_code == 200
     assert me_response.json()["display_name"] == "Driver"
 
+    update_response = client.patch(
+        "/api/auth/me",
+        json={
+            "display_name": "Track Driver",
+        },
+    )
+    assert update_response.status_code == 200
+    assert update_response.json()["display_name"] == "Track Driver"
+
 
 def test_upload_flow_creates_visualization_payload(tmp_path) -> None:
     upload_root = tmp_path / "uploads"
@@ -74,3 +83,4 @@ def test_upload_flow_creates_visualization_payload(tmp_path) -> None:
     visualization = visualization_response.json()
     assert len(visualization["time_axis"]) == visualization["sample_count"]
     assert any(metric["key"] == "rpm" for metric in visualization["metrics"])
+    assert payload["map_name"]

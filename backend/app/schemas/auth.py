@@ -17,6 +17,10 @@ class LoginRequest(BaseModel):
     password: str = Field(min_length=8, max_length=128)
 
 
+class UpdateProfileRequest(BaseModel):
+    display_name: Optional[str] = Field(default=None, max_length=80)
+
+
 class AuthUser(BaseModel):
     id: str
     email: EmailStr

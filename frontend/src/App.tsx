@@ -4,6 +4,7 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 import { AuthPage } from './pages/AuthPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { LogDetailPage } from './pages/LogDetailPage'
+import { ProfilePage } from './pages/ProfilePage'
 import { UploadPage } from './pages/UploadPage'
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppShell />}>
           <Route index element={<DashboardPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/upload" element={<UploadPage />} />
           <Route path="/logs/:uploadId" element={<LogDetailPage />} />
         </Route>

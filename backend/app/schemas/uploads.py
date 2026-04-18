@@ -31,6 +31,7 @@ class UploadListItem(BaseModel):
     metric_count: int
     device_label: Optional[str]
     vehicle_profile: Optional[str]
+    map_name: Optional[str]
 
 
 class UploadDetail(UploadListItem):

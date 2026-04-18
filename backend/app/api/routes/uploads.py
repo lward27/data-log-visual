@@ -41,6 +41,7 @@ def _serialize_upload_list_item(upload: DataLogUpload, metric_count: int) -> Upl
         metric_count=metric_count,
         device_label=upload.source_metadata.get("device"),
         vehicle_profile=upload.source_metadata.get("vehicle_profile"),
+        map_name=upload.source_metadata.get("map_name"),
     )
 
 

@@ -59,6 +59,7 @@ npm run dev
 - `POST /api/auth/login`
 - `POST /api/auth/logout`
 - `GET /api/auth/me`
+- `PATCH /api/auth/me`
 - `GET /api/healthz`
 - `GET /api/uploads`
 - `POST /api/uploads`
@@ -69,5 +70,6 @@ npm run dev
 ## Notes
 
 - Upload storage is PVC-backed filesystem storage for now.
+- Alembic baseline migration is checked in under [backend/alembic/versions/20260418_0001_initial_schema.py](/Users/wardl/Personal/apps/data-log-visual/backend/alembic/versions/20260418_0001_initial_schema.py).
 - Same-origin routing is expected in production: `/` for the frontend and `/api` for the backend on `datalog.lucas.engineering`.
 - The implementation plan lives at [planning/mvp-implementation-plan.md](/Users/wardl/Personal/apps/data-log-visual/planning/mvp-implementation-plan.md).

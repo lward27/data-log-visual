@@ -23,6 +23,7 @@ export function AppShell() {
               Library
             </NavLink>
             <NavLink to="/upload">Upload</NavLink>
+            <NavLink to="/profile">Profile</NavLink>
           </nav>
           <div className="user-pill">
             <span>{user?.display_name || user?.email}</span>

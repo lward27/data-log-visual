@@ -43,4 +43,13 @@ export const api = {
       body: formData,
     })
   },
+  patch<T>(path: string, body: unknown) {
+    return request<T>(path, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    })
+  },
 }
