@@ -29,6 +29,12 @@ class Settings(BaseSettings):
         env_file = ".env"
         case_sensitive = False
 
+        @classmethod
+        def parse_env_var(cls, field_name: str, raw_val: str):
+            if field_name == "cors_origins":
+                return [item.strip() for item in raw_val.split(",") if item.strip()]
+            return cls.json_loads(raw_val)
+
     @validator("cors_origins", pre=True)
     def _split_origins(cls, value: str | list[str]) -> list[str]:
         if isinstance(value, str):
