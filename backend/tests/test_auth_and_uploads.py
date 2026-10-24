@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from fastapi.testclient import TestClient
+from sqlalchemy import event
 from sqlmodel import Session, SQLModel, create_engine
 
 from app.core.config import settings
@@ -11,6 +12,11 @@ from app.main import app
 def _build_test_client(tmp_path):
     sqlite_path = tmp_path / "test.db"
     engine = create_engine(f"sqlite:///{sqlite_path}", connect_args={"check_same_thread": False})
+    # Match PostgreSQL's enforcement so upload insert ordering is exercised.
+    @event.listens_for(engine, "connect")
+    def enable_foreign_keys(connection, _):
+        connection.execute("PRAGMA foreign_keys=ON")
+
     SQLModel.metadata.create_all(engine)
 
     def override_get_session():
