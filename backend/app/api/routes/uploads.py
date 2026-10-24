@@ -128,6 +128,8 @@ async def create_upload(
         summary=parsed.summary,
     )
     session.add(upload)
+    # Persist the parent before metrics; no ORM relationship orders these inserts.
+    session.flush()
 
     metrics: list[DataLogMetric] = []
     for metric in parsed.metrics:
